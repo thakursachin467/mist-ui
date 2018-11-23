@@ -1,16 +1,9 @@
-# Javascript Node CircleCI 2.0 configuration file
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/node:10.5
       
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
     steps:
       - checkout
       - run: yarn
@@ -20,7 +13,15 @@ jobs:
       - store_artifacts:
           path: build/manifest.json
 
-
+      - run:
+          name: "Commiting docs files and publishing module"
+          command: |
+            if [[ $CIRCLE_BRANCH == 'circleci' ]]; then
+              echo "We're on $CIIRCLE_BRANCH branch, deploying..."
+              BRANCH=$CIRCLE_BRANCH ./deploy.sh;
+            else
+              echo "Not on master branch, skipping deployment."
+            fi;
 
 
 
