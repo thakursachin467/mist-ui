@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: yarn
-      - run: yarn build:all
+      - run: CI=false yarn build:all
 
 
       - run:
