@@ -7,14 +7,11 @@ jobs:
     steps:
       - checkout
       - run: yarn
-      - run: CI=false yarn deploy
-      - store_artifacts:
-          path: build/mist*.asar
-      - store_artifacts:
-          path: build/manifest.json
+      - run: yarn build:all
+
 
       - run:
-          name: "Commiting docs files and publishing module"
+          name: ""
           command: |
             if [[ $CIRCLE_BRANCH == 'circleci' ]]; then
               echo "We're on $CIIRCLE_BRANCH branch, deploying..."
@@ -23,5 +20,13 @@ jobs:
               echo "Not on master branch, skipping deployment."
             fi;
 
+      - run:
+          name: "Copy artifacts"
+          command: |
+            mkdir -p /tmp/artifacts;
+            cp build/mist*.asar /tmp/artifacts;
+            cp build/manifest.json /tmp/artifacts;
+            cp build/metadata.json /tmp/artifacts;
 
-
+      - store_artifacts:
+          path: /tmp/artifacts

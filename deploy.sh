@@ -16,3 +16,5 @@ yarn run standard-version --message='chore(release): %s [ci skip]'
 # Pushes changes back to the repository
 git push --follow-tags origin $BRANCH
 
+# Deploys metadata
+yarn run deploy
