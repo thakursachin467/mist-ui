@@ -24,7 +24,6 @@ jobs:
           name: "Copy artifacts"
           command: |
             mkdir -p /tmp/artifacts;
-            cp build/mist*.asar /tmp/artifacts;
             cp build/manifest.json /tmp/artifacts;
             cp build/metadata.json /tmp/artifacts;
 
